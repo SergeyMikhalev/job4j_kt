@@ -1,20 +1,27 @@
 package ru.job4j.base
 
-fun add(first: Int, second :Int) :Int {
+fun add(first: Int, second: Int): Int {
     return first + second
 }
 
-fun subtract(first: Int, second :Int) :Int {
+fun subtract(first: Int, second: Int): Int {
     return first - second
 }
 
-fun multiply(first: Int, second :Int) :Int {
+fun multiply(first: Int, second: Int): Int {
     return first * second
 }
 
-fun divide(first: Int, second :Int) :Int {
+fun divide(first: Int, second: Int): Int {
     return first / second
 }
+
+fun max(first: Int, second: Int): Int
+= if (first > second) first else second
+
+fun max(first:Int, second: Int, third: Int): Int
+= max(max(first, second), third)
+
 
 fun main() {
 
@@ -29,5 +36,11 @@ fun main() {
 
     val div = divide(6, 2)
     println("6 / 2 = $div")
+
+    val maximum = max(7, 4)
+    println("max from 7 and 4 is $maximum")
+
+    val max3 = max(9, 11,2)
+    println("max from 9, 11, 2 is $max3")
 
 }

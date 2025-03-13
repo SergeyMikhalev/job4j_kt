@@ -19,6 +19,9 @@ fun draw(size :Int) {
     }
 }
 
+private const val FIVE = 5
+
 fun main(args :Array<String>) {
-    draw(5)
+    draw(FIVE)
 }
+

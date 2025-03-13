@@ -1,12 +1,25 @@
 package ru.job4j.base
 
+
+private const val SIZE = 10
+
+private const val ZERO = 0
+
+private const val ONE = 1
+
+private const val FOUR = 4
+
+private const val FIVE = 5
+
+private const val SEVEN = 7
+
 fun createArray(): Array<String?> {
-    val names = arrayOfNulls<String>(10)
-    names[0] = "Petr Arsentev"
-    names[1] = "Petr Arsentev"
-    names[4] = "Petr Arsentev"
-    names[5] = "Petr Arsentev"
-    names[7] = "Petr Arsentev"
+    val names = arrayOfNulls<String>(SIZE)
+    names[ZERO] = "Petr Arsentev"
+    names[ONE] = "Petr Arsentev"
+    names[FOUR] = "Petr Arsentev"
+    names[FIVE] = "Petr Arsentev"
+    names[SEVEN] = "Petr Arsentev"
 
     names.forEach { s -> println(s) }
 
@@ -21,17 +34,17 @@ fun main() {
 }
 
 fun defragment(array: Array<String?>) {
-    var emptyIdex = -1
+    var emptyIdex = -ONE
     for ((index, str) in array.withIndex()) {
         if (str == null) {
-            if (emptyIdex == -1 ) {
+            if (emptyIdex == -ONE) {
                 emptyIdex = index
             }
         } else {
-            if (emptyIdex !=-1) {
+            if (emptyIdex !=-ONE) {
                 array[emptyIdex] = str
                 array[index] = null
-                emptyIdex += 1
+                emptyIdex += ONE
             }
         }
     }

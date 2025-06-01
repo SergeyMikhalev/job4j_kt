@@ -14,7 +14,7 @@ object StartUI {
 
     fun init() {
         var run = true
-        var operation = ""
+        var operation =""
         while (run) {
             println(OPERATIONS_DESCRIPTION.trimIndent())
             operation = readln()

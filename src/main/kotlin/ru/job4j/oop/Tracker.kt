@@ -3,28 +3,29 @@ package ru.job4j.oop
 
 class Tracker {
     private var id = 0;
-    private val items = ArrayList<Item>();
+    private val items = arrayListOf<Item>();
 
-    fun add(item: Item) :Item {
+    fun add(item: Item): Item {
         item.id = id++
         items.add(item)
         return item
     }
 
-    fun findAll() :List<Item> = items
+    fun findAll(): List<Item> = items
 
-    fun findById(id: Int) : Item? {
+    fun findById(id: Int): Item? {
         val index = indexOf(id)
-        return if (index != -1) items[index] else null
+        if (index == -1) {
+            return null
+        }
+        return items[index]
     }
 
     fun findByName(key: String): List<Item> {
-        val result: ArrayList<Item> = ArrayList()
-        for (item in items) {
-            if (key == item.name) {
-                result.add(item)
-            }
-        }
+        val result = mutableListOf<Item>()
+        items.stream()
+            .filter { key == it.name }
+            .forEach(result::add)
         return result
     }
 
@@ -47,10 +48,10 @@ class Tracker {
         return true
     }
 
-    private fun indexOf(id :Int): Int {
-        for((index, item) in items.withIndex()) {
+    private fun indexOf(id: Int): Int {
+        for ((index, item) in items.withIndex()) {
             if (item.id == id) {
-                return  index
+                return index
             }
         }
 

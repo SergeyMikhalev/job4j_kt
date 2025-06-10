@@ -20,14 +20,8 @@ object StartUI {
             operation = readln()
 
             when (operation) {
-                "1" -> {
-                    println("Введите пожалуйста имя заявки:")
-                    tracker.add(Item(0, readln()))
-                }
-                "2" -> {
-                    println("Список сохраненных заявок:")
-                    tracker.findAll().forEach { println("" + it.id + " - " + it.name) }
-                }
+                "1" -> addItem()
+                "2" -> printAllItems()
                 "3" -> {
                     println("Завершение работы!")
                     run = false
@@ -35,6 +29,16 @@ object StartUI {
                 else -> println("Неверный ввод. Повсторите попытку.")
             }
         }
+    }
+
+    private fun printAllItems() {
+        println("Список сохраненных заявок:")
+        tracker.findAll().forEach { println("" + it.id + " - " + it.name) }
+    }
+
+    private fun addItem() {
+        println("Введите пожалуйста имя заявки:")
+        tracker.add(Item(0, readln()))
     }
 
 }

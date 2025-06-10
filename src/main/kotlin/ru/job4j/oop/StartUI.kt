@@ -1,7 +1,10 @@
 package ru.job4j.oop
 
-object StartUI {
-    private const val OPERATIONS_DESCRIPTION = """
+class StartUI {
+
+    companion object {
+        
+        private const val OPERATIONS_DESCRIPTION = """
                 ----------------------------------
                 Доступные операции:
                 1 - Добавить заявку
@@ -9,6 +12,17 @@ object StartUI {
                 3 - Выход
                 Пожалуйста, введите номер операции:
             """
+
+        fun printAllItems(tracker: Tracker) {
+            println("Список сохраненных заявок:")
+            tracker.findAll().forEach { println("" + it.id + " - " + it.name) }
+        }
+
+        fun addItem(tracker: Tracker) {
+            println("Введите пожалуйста имя заявки:")
+            tracker.add(Item(0, readln()))
+        }
+    }
 
     private val tracker = Tracker()
 
@@ -20,8 +34,8 @@ object StartUI {
             operation = readln()
 
             when (operation) {
-                "1" -> addItem()
-                "2" -> printAllItems()
+                "1" -> addItem(tracker)
+                "2" -> printAllItems(tracker)
                 "3" -> {
                     println("Завершение работы!")
                     run = false
@@ -30,19 +44,8 @@ object StartUI {
             }
         }
     }
-
-    private fun printAllItems() {
-        println("Список сохраненных заявок:")
-        tracker.findAll().forEach { println("" + it.id + " - " + it.name) }
-    }
-
-    private fun addItem() {
-        println("Введите пожалуйста имя заявки:")
-        tracker.add(Item(0, readln()))
-    }
-
 }
 
 fun main(args: Array<String>) {
-    StartUI.init()
+    StartUI().init()
 }

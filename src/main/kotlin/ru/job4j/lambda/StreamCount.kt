@@ -1,9 +1,7 @@
 package ru.job4j.lambda
 
-import java.util.function.BinaryOperator
-
+@SuppressWarnings("detekt:MagicNumber")
 fun count(list: List<Int>) :Int {
-    var acc = 0
     return list
         .stream()
         .filter {it > 9}
@@ -12,6 +10,7 @@ fun count(list: List<Int>) :Int {
         .orElse(0)
 }
 
+@SuppressWarnings("detekt:MagicNumber")
 fun main() {
     val someList = arrayListOf(1,2,10,11)
     println(someList)

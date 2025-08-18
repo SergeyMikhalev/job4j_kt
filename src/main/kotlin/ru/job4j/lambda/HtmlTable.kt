@@ -18,6 +18,7 @@ class HtmlTable {
     }
 }
 
+@SuppressWarnings("detekt:MagicNumber")
 fun main() {
     println(HtmlTable().table(3,3))
 }

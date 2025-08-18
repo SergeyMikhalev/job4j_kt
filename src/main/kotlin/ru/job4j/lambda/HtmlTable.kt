@@ -1,6 +1,6 @@
 package ru.job4j.lambda
 
-@SuppressWarnings("detekt:UnusedProperty")
+@SuppressWarnings("detekt:UnusedPrivateProperty")
 class HtmlTable {
     fun table(row: Int, cell: Int): String {
         val table = StringBuilder()

@@ -3,7 +3,7 @@ package ru.job4j.safe.purchase
 import java.time.LocalDate
 
 fun toHtmlTable(purchases :ArrayList<Purchase>) :String {
-    return with(StringBuilder()) {
+    return buildString {
         append("<table>\n")
 
         for (purchase in purchases) {
@@ -24,7 +24,7 @@ fun toHtmlTable(purchases :ArrayList<Purchase>) :String {
             append("</tr>\n")
         }
         append("</table>\n")
-    }.toString()
+    }
 }
 
 @SuppressWarnings("detekt:MagicNumber")

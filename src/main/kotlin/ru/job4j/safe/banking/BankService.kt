@@ -2,13 +2,13 @@ package ru.job4j.safe.banking
 
 
 class BankService {
-    private val users: HashMap<User, ArrayList<Account?>> = HashMap<User, ArrayList<Account?>>()
+    private val users: HashMap<User, ArrayList<Account>> = HashMap()
 
     fun addUser(user: User) {
         users.putIfAbsent(user, ArrayList())
     }
 
-    fun findByRequisite(passport: String?, requisite: String?): Account? {
+    fun findByRequisite(passport: String, requisite: String): Account? {
         val user: User = findByPassport(passport) ?: return null
         /*
         * Возможно это неоптимально по производительности,
@@ -21,13 +21,13 @@ class BankService {
             .orElse(null)
     }
 
-    fun addAccount(passport: String?, account: Account?) {
+    fun addAccount(passport: String, account: Account) {
         val user: User = findByPassport(passport) ?: return
         users[user]?.add(account)
     }
 
 
-    fun findByPassport(passport: String?): User? {
+    fun findByPassport(passport: String): User? {
         for (user in users.keys) {
             if (user.passport.equals(passport)) {
                 return user
@@ -37,8 +37,8 @@ class BankService {
     }
 
     fun transferMoney(
-        srcPassport: String?, srcRequisite: String?,
-        destPassport: String?, descRequisite: String?, amount: Double
+        srcPassport: String, srcRequisite: String,
+        destPassport: String, descRequisite: String, amount: Double
     ): Boolean {
         val source = findByRequisite(srcPassport, srcRequisite)
         val dest = findByRequisite(destPassport, descRequisite)
@@ -52,7 +52,7 @@ class BankService {
 
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val bank = BankService()
     bank.addUser(User("321", "Petr Arsentev"))
     var user: User? = bank.findByPassport("3211")

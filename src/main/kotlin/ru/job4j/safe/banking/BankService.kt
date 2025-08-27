@@ -1,6 +1,5 @@
 package ru.job4j.safe.banking
 
-
 class BankService {
     private val users: HashMap<User, ArrayList<Account>> = HashMap()
 

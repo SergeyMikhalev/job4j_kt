@@ -9,10 +9,6 @@ class BankService {
 
     fun findByRequisite(passport: String, requisite: String): Account? {
         val user: User = findByPassport(passport) ?: return null
-        /*
-        * Возможно это неоптимально по производительности,
-        * но на три ретёрна в функции детект уже ругается
-        * */
         return users.getOrDefault(user, emptyList())
             .stream()
             .filter { account: Account? -> account?.requisite.equals(requisite) }

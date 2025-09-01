@@ -20,6 +20,7 @@ data class Stock(val name: String, val currency: Currency, val date: LocalDate) 
     }
 }
 
+@SuppressWarnings("detekt:MagicNumber")
 fun main() {
     val ruble = Currency(34, "Рубль")
     val dollar = Currency(10, "Дллар США")
@@ -29,5 +30,4 @@ fun main() {
 
     println(msft.equals(sbmx))
     println(sbmx.equals(sbmx))
-
 }

@@ -7,42 +7,39 @@ class BankService {
         users.putIfAbsent(user, ArrayList())
     }
 
-    fun findByRequisite(passport: String, requisite: String): Account? {
-        val user: User = findByPassport(passport) ?: return null
+    fun findByRequisite(passport: String, requisite: String): Account {
+        val user: User = findByPassport(passport)
         return users.getOrDefault(user, emptyList())
             .stream()
             .filter { account: Account? -> account?.requisite.equals(requisite) }
             .findFirst()
-            .orElse(null)
+            .orElseThrow { NoSuchElementException("Аккаунт, соответствующий реквизитам не найден : $requisite") }
     }
 
     fun addAccount(passport: String, account: Account) {
-        val user: User = findByPassport(passport) ?: return
+        val user: User = findByPassport(passport)
         users[user]?.add(account)
     }
 
 
-    fun findByPassport(passport: String): User? {
+    fun findByPassport(passport: String): User {
         for (user in users.keys) {
             if (user.passport.equals(passport)) {
                 return user
             }
         }
-        return null
+        throw NoSuchElementException("Пользователь с соответствующим паспортом не найден : $passport")
     }
 
     fun transferMoney(
         srcPassport: String, srcRequisite: String,
         destPassport: String, descRequisite: String, amount: Double
-    ): Boolean {
+    ) {
         val source = findByRequisite(srcPassport, srcRequisite)
         val dest = findByRequisite(destPassport, descRequisite)
-        val rsl = source != null && dest != null
-        if (rsl) {
-            source!!.balance -= amount
-            dest!!.balance += amount
-        }
-        return rsl
+
+        source.balance -= amount
+        dest.balance += amount
     }
 
 }
@@ -50,8 +47,19 @@ class BankService {
 fun main() {
     val bank = BankService()
     bank.addUser(User("321", "Petr Arsentev"))
-    var user: User? = bank.findByPassport("3211")
-    println(user?.username)
-    user = bank.findByPassport("321")
-    println(user?.username)
+    var user: User
+
+    try {
+        user = bank.findByPassport("3211")
+        println(user.username)
+    } catch (e: NoSuchElementException) {
+        println(e.message)
+    }
+
+    try {
+        user = bank.findByPassport("321")
+        println(user.username)
+    } catch (e: NoSuchElementException) {
+        println(e.message)
+    }
 }

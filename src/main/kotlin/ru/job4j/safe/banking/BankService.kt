@@ -11,7 +11,7 @@ class BankService {
         val user: User = findByPassport(passport)
         return users.getOrDefault(user, emptyList())
             .stream()
-            .filter { account: Account? -> account?.requisite.equals(requisite) }
+            .filter { account: Account -> account.requisite.equals(requisite) }
             .findFirst()
             .orElseThrow { NoSuchElementException("Аккаунт, соответствующий реквизитам не найден : $requisite") }
     }

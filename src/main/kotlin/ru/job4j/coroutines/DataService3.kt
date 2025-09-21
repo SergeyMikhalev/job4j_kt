@@ -1,18 +1,15 @@
 package ru.job4j.coroutines
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class DataService3 {
 
     suspend fun performOperation(timeout: Long) {
 
-        val job = launch {
-            println("Повышаем престиж профессии учителя")
-            delay()
+        val job = la
 
-        }
         // Создайте первую корутину для выполнения полезной функции (job)
         // В этой корутине используйте цикл и delay для имитации работы
         // Добавьте логику для обработки отмены через try-catch или isActive
@@ -23,9 +20,14 @@ class DataService3 {
 
         // Ожидайте завершения первой корутины с помощью job.join()
     }
+
 }
 
 fun main() = runBlocking {
     val dataService = DataService3()
     dataService.performOperation(1000)
+
+    val some = launch {
+        println()
+    }
 }

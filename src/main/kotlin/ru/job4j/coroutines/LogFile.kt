@@ -1,13 +1,10 @@
 package ru.job4j.coroutines
 
-
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.stream.Collectors
 
 fun main() {
     val logFile = File("F:\\1\\logs.txt")
@@ -29,30 +26,28 @@ fun readLogs(file: File): List<LogEntry> {
 }
 
 fun groupLogsByDateAndLevel(logs: List<LogEntry>): Map<String, Map<String, List<LogEntry>>> {
+
     return logs
-        .stream()
-        .collect(Collectors
-            .groupingBy(LogEntry::level,
-                Collectors.groupingBy { it.date }) )
+        .groupBy { it.level }
+        .mapValues { it.value.groupBy { logEntry -> logEntry.date } }
 }
 
 fun writeLogsToFiles(groupedLogs: Map<String, Map<String, List<LogEntry>>>)  = runBlocking {
-    groupedLogs
-        .entries
-        .asFlow()
-        .collect{
+    groupedLogs.forEach{
             launch {
                 val logFile = File("F:\\1\\${it.key}.txt")
                 val sb = StringBuilder()
-                if (!logFile.exists())  {
+                if (!logFile.exists()) {
                     logFile.createNewFile()
                 }
-                it.value.entries.sortedBy { LocalDate.parse(it.key)  } .forEach { entry ->
+                it.value.entries.sortedBy { LocalDate.parse(it.key) }.forEach { entry ->
                     sb.append("${entry.key}\n")
-                    sb.append(entry.value.sortedBy { LocalTime.parse(it.time) }.joinToString(
-                        separator = "\n",
-                        postfix = "\n",
-                        transform = {"${it.time} ${it.message}"}) )
+                    sb.append(
+                        entry.value.sortedBy { LocalTime.parse(it.time) }.joinToString(
+                            separator = "\n",
+                            postfix = "\n",
+                            transform = { "${it.time} ${it.message}" })
+                    )
                 }
                 logFile.writeText(sb.toString())
             }
